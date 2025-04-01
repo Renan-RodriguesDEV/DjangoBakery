@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Realizar Compra - Padaria da Vila{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Realizar Compra</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-brown text-white">
+                    <h5 class="card-title mb-0">Produtos Disponíveis</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Buscar produto...">
+                                <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="categoryFilter" class="form-select">
+                                <option value="">Todas as categorias</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Doces">Doces</option>
+                                <option value="Salgados">Salgados</option>
+                                <option value="Padaria">Padaria</option>
+                                <option value="Mercearia">Mercearia</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row row-cols-1 row-cols-md-3 g-4" id="productsList">
+                        {% for produto in produtos %}
+                        <div class="col product-item" data-categoria="{{ produto.categoria }}">
+                            <div class="card h-100">
+                                <div class="card-header text-center bg-light">
+                                    <h5 class="card-title mb-0">{{ produto.nome }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <span class="badge bg-info">{{ produto.categoria }}</span>
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Preço:</strong> R$ {{ produto.preco|floatformat:2 }}
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Estoque:</strong> {{ produto.estoque }} unidades
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <form method="post" action="{% url 'add_to_cart' produto.id %}" class="d-flex">
+                                        {% csrf_token %}
+                                        <input type="number" name="quantidade" value="1" min="1" max="{{ produto.estoque }}" class="form-control me-2">
+                                        <button type="submit" class="btn btn-warning flex-grow-1">
+                                            <i class="fa fa-cart-plus"></i> Adicionar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h5 class="card-title mb-0">Meu Carrinho</h5>
+                </div>
+                <div class="card-body">
+                    {% if cart_items %}
+                    <div class="list-group">
+                        {% for item in cart_items %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="mb-1">{{ item.produto.nome }}</h6>
+                                <form method="post" action="{% url 'remove_from_cart' item.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <p class="mb-1">{{ item.quantidade }} x R$ {{ item.produto.preco|floatformat:2 }}</p>
+                            <small class="text-muted">Subtotal: R$ {{ item.subtotal|floatformat:2 }}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <strong>Total:</strong> R$ {{ cart_total|floatformat:2 }}
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'cart' %}" class="btn btn-primary">
+                            <i class="fa fa-shopping-cart me-2"></i> Ver Carrinho
+                        </a>
+                        <a href="{% url 'checkout' %}" class="btn btn-success">
+                            <i class="fa fa-check-circle me-2"></i> Finalizar Compra
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        Seu carrinho está vazio.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const productItems = document.querySelectorAll('.product-item');
+        
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            
+            productItems.forEach(item => {
+                const productName = item.querySelector('.card-title').textContent.toLowerCase();
+                const productCategory = item.dataset.categoria;
+                
+                const matchesSearch = productName.includes(searchTerm);
+                const matchesCategory = !categoryValue || productCategory === categoryValue;
+                
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        searchInput.addEventListener('input', filterProducts);
+        categoryFilter.addEventListener('change', filterProducts);
+        document.getElementById('searchButton').addEventListener('click', filterProducts);
+    });
+</script>
+{% endblock %}
+{% endblock %}

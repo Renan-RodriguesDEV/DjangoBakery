@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Alterar Cliente - Padaria da Vila{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4"><span class="text-warning">Alteração</span> de <span class="text-brown">Clientes</span></h1>
+    
+    <div class="card shadow">
+        <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'client_create' %}">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'client_edit' 0 %}">Alterar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'client_delete' %}">Excluir</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="cliente" class="form-label text-warning">Selecione o cliente</label>
+                    <select class="form-select" id="cliente" name="cliente">
+                        <option value="">Selecione o cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.nome }} ({{ cliente.email }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="nome" class="form-label text-warning">Novo Nome do Cliente</label>
+                    <input type="text" class="form-control" id="nome" name="nome">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="cpf" class="form-label text-warning">Novo CPF do Cliente</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="666.666.666-69">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label text-warning">Novo Email do Cliente</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="marcosmendes@gmail.com">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="telefone" class="form-label text-warning">Novo Telefone do Cliente</label>
+                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(21) 77070-7070">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Alterar Cliente</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

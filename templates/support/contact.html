@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Suporte - Padaria da Vila{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Suporte ao Usuário</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-brown text-white">
+                    <h5 class="card-title mb-0">Entre em Contato</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="assunto" class="form-label">Assunto</label>
+                            <input type="text" class="form-control" id="assunto" name="assunto" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label">Mensagem</label>
+                            <textarea class="form-control" id="mensagem" name="mensagem" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">Informações de Contato</h5>
+                </div>
+                <div class="card-body">
+                    <p><i class="fa fa-user me-2"></i> <strong>Criador e Suporte:</strong> @__little_renan.py</p>
+                    <p><i class="fa fa-envelope me-2"></i> <strong>Email:</strong> <a href="mailto:renanrodrigues7110@gmail.com">renanrodrigues7110@gmail.com</a></p>
+                    <p><i class="fa fa-phone me-2"></i> <strong>Telefone:</strong> (19) 99872-2472</p>
+                    <p><i class="fa fa-whatsapp me-2"></i> <strong>WhatsApp:</strong> <a href="https://wa.me/5519998722472" target="_blank">(19) 99872-2472</a></p>
+                    <p><i class="fa fa-link me-2"></i> <strong>Website:</strong> <a href="https://bakery-of-village.streamlit.app/" target="_blank">bakery-of-village.streamlit.app</a></p>
+                </div>
+            </div>
+            
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h5 class="card-title mb-0">Horário de Atendimento</h5>
+                </div>
+                <div class="card-body">
+                    <p><i class="fa fa-clock-o me-2"></i> <strong>Segunda a Sexta:</strong> 08:00 às 18:00</p>
+                    <p><i class="fa fa-clock-o me-2"></i> <strong>Sábado:</strong> 08:00 às 12:00</p>
+                    <p><i class="fa fa-clock-o me-2"></i> <strong>Domingo:</strong> Fechado</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

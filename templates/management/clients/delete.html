@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Excluir Cliente - Padaria da Vila{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4"><span class="text-danger">Exclusão</span> de <span class="text-brown">Clientes</span></h1>
+    
+    <div class="card shadow">
+        <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'client_create' %}">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'client_edit' 0 %}">Alterar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'client_delete' %}">Excluir</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="cliente" class="form-label text-danger">Selecione o cliente</label>
+                    <select class="form-select" id="cliente" name="cliente" required>
+                        <option value="">Selecione o cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.nome }} ({{ cliente.email }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <i class="fa fa-exclamation-triangle me-2"></i>
+                    Atenção, essa ação é irreversível!!!
+                </div>
+                
+                <button type="submit" class="btn btn-danger">Deletar Cliente</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

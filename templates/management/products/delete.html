@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Exclusão de
+Produtos - Padaria da Vila{% endblock %} {% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4">
+    <span class="text-danger">Exclusão</span> de
+    <span class="text-brown">Produtos</span>
+  </h1>
+
+  <div class="card shadow">
+    <div class="card-header bg-light">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product_create' %}">Cadastrar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product_edit' %}">Alterar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'product_delete' %}"
+            >Excluir</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="produto" class="form-label text-danger"
+            >Selecione o produto</label
+          >
+          <select class="form-select" id="produto" name="produto" required>
+            <option value="">Selecione o produto</option>
+            {% for produto in produtos %}
+            <option value="{{ produto.id }}">
+              {{ produto.nome }} (R$ {{ produto.preco|floatformat:2 }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="alert alert-danger mb-4">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-exclamation-triangle fa-2x me-3"></i>
+            <div>
+              <h5 class="alert-heading">Aviso de Exclusão!</h5>
+              <p class="mb-0">
+                Essa ação é irreversível e não poderá ser desfeita. Todos os
+                dados relacionados a este produto serão excluídos
+                permanentemente.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="confirmDelete"
+            name="confirmDelete"
+            required
+          />
+          <label class="form-check-label" for="confirmDelete">
+            Confirmo que desejo excluir este produto permanentemente
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Deletar Produto</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const produtoSelect = document.getElementById("produto");
+    const confirmDelete = document.getElementById("confirmDelete");
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+      if (!confirmDelete.checked) {
+        event.preventDefault();
+        alert(
+          "Por favor, confirme a exclusão marcando a caixa de confirmação."
+        );
+      }
+
+      if (!produtoSelect.value) {
+        event.preventDefault();
+        alert("Por favor, selecione um produto para excluir.");
+      }
+    });
+  });
+</script>
+{% endblock %} {% endblock %}

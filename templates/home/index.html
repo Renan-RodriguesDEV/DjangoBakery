@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Padaria da Vila - Página Inicial{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center py-3">
+        <h1 class="display-4">Olá, <span class="text-brown fw-bold">{{ user.first_name }} {{ user.last_name }}</span>!</h1>
+        <p class="lead fst-italic text-secondary mb-5">Seja bem-vindo(a) ao nosso sistema de vendas</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-brown text-white">
+                    <h3 class="card-title">Acesso Rápido</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% if not user.is_staff %}
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'make_purchase' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-shopping-bag me-2"></i> Comprar
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'products' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-list me-2"></i> Catálogo de Produtos
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'debt_query' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-receipt me-2"></i> Consultar Pendências
+                            </a>
+                        </div>
+
+                        {% if not user.is_staff %}
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'my_purchases' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-box me-2"></i> Minhas Compras
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        {% if user.is_staff %}
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'product_create' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-plus-circle me-2"></i> Cadastro de Produtos
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'client_create' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-user-plus me-2"></i> Cadastro de Clientes
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'debt_update' %}" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fa fa-edit me-2"></i> Alterar Pendências
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-5">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5 class="card-title text-center custom-paragraph fw-bold fst-italic">Estamos localizados em 📍:</h5>
+                </div>
+                <div class="card-body p-0">
+                    <iframe 
+                        width="100%" 
+                        height="300" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        marginheight="0" 
+                        marginwidth="0" 
+                        src="https://maps.google.com/maps?q=-23.406600592923784,-49.09880181525712&z=15&output=embed">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

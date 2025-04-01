@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block title %}Login - Padaria da Vila{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-brown text-white">
+        <h2 class="text-center">Faça seu Login</h2>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="typeuser"
+              name="typeuser"
+            />
+            <label class="form-check-label" for="typeuser">Administrador</label>
+          </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">E-mail</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="remember"
+              name="remember"
+            />
+            <label class="form-check-label" for="remember">Lembrar-me</label>
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            <a href="{% url 'forgot_password' %}" class="btn btn-secondary"
+              >Esqueci minha senha</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

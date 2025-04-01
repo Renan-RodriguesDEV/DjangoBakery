@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Compras - Padaria da Vila{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">Minhas Compras</h1>
+<h2 class="fs-4 text-muted">Altere status de entrega e veja suas compras ainda não retiradas!</h2>
+<hr>
+
+{% if compras %}
+    <div class="row">
+        {% for compra in compras %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-brown text-white">
+                    <h5 class="mb-0">{{ compra.produto }}</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Quantidade:</th>
+                            <td>{{ compra.quantidade }}</td>
+                        </tr>
+                        <tr>
+                            <th>Valor Unitário:</th>
+                            <td>R$ {{ compra.preco|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Valor Total:</th>
+                            <td class="fw-bold text-gold">R$ {{ compra.total|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Data:</th>
+                            <td>{{ compra.data|date:"d/m/Y H:i" }}</td>
+                        </tr>
+                    </table>
+                    <div class="d-flex gap-2 mt-3">
+                        <form method="post" action="{% url 'mark_as_retrieved' compra.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Já retirei</button>
+                        </form>
+                        <form method="post" action="{% url 'will_retrieve' compra.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">Vou retirar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        Não há compras para retirada ou atualização de status!
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Produtos - Padaria da Vila{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4"><span class="text-warning">Cadastro</span> de <span class="text-brown">Produtos</span></h1>
+    
+    <div class="card shadow">
+        <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'product_create' %}">Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_edit' 0 %}">Alterar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_delete' %}">Excluir</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="nome" class="form-label text-success">Nome do Produto</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="preco" class="form-label text-success">Preço</label>
+                    <input type="number" class="form-control" id="preco" name="preco" min="0" step="0.01" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="qtde" class="form-label text-success">Quantidade</label>
+                    <input type="number" class="form-control" id="qtde" name="qtde" min="0" step="1" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="categoria" class="form-label text-success">Categoria</label>
+                    <select class="form-select" id="categoria" name="categoria" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Doces">Doces</option>
+                        <option value="Salgados">Salgados</option>
+                        <option value="Padaria">Padaria</option>
+                        <option value="Mercearia">Mercearia</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

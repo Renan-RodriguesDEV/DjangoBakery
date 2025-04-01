@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo de Produtos - Padaria da Vila{% endblock %}
+
+{% block content %}
+<h1 class="mt-4 text-gold">Consulta de Produtos</h1>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-light">
+                <form method="get" class="row g-3">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="search" placeholder="Digite o nome do produto" value="{{ request.GET.search }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">Procurar produto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form method="get">
+            <select name="categoria" class="form-select" onchange="this.form.submit()">
+                <option value="">Todas as categorias</option>
+                <option value="Bebidas" {% if request.GET.categoria == 'Bebidas' %}selected{% endif %}>Bebidas</option>
+                <option value="Doces" {% if request.GET.categoria == 'Doces' %}selected{% endif %}>Doces</option>
+                <option value="Salgados" {% if request.GET.categoria == 'Salgados' %}selected{% endif %}>Salgados</option>
+                <option value="Padaria" {% if request.GET.categoria == 'Padaria' %}selected{% endif %}>Padaria</option>
+                <option value="Mercearia" {% if request.GET.categoria == 'Mercearia' %}selected{% endif %}>Mercearia</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+{% if produtos %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="bg-brown text-white">
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Categoria</th>
+                {% if user.is_authenticated %}
+                <th>Ações</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.nome }}</td>
+                <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                <td>{{ produto.estoque }}</td>
+                <td>{{ produto.categoria }}</td>
+                {% if user.is_authenticated %}
+                <td>
+                    <a href="{% url 'add_to_cart' produto.id %}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-cart-plus"></i> Adicionar
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'download_products' %}" class="btn btn-success">
+    <i class="fas fa-download"></i> Baixar planilha
+</a>
+{% else %}
+<div class="alert alert-warning">
+    Nenhum produto encontrado.
+</div>
+{% endif %}
+{% endblock %}
