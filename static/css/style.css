@@ -1,0 +1,304 @@
+/* Estilos gerais */
+:root {
+    --primary-color: #8B4513;  /* Marrom para tema de padaria */
+    --secondary-color: #F5DEB3; /* Wheat - cor de trigo */
+    --accent-color: #FFD700;   /* Gold - para destaques */
+    --danger-color: #DC3545;   /* Vermelho para alertas */
+    --success-color: #28A745;  /* Verde para sucesso */
+    --dark-color: #343A40;     /* Escuro para footer */
+    --light-color: #F8F9FA;    /* Claro para background */
+    --text-color: #333333;     /* Cor principal para texto */
+    --light-text: #FFFFFF;     /* Texto claro */
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+.bg-brown {
+    background-color: var(--primary-color);
+}
+
+header h1 {
+    font-family: 'Pacifico', cursive, sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+/* Navegação */
+.sidebar {
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 150px);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    z-index: 100;
+    padding: 20px 0;
+}
+
+.sidebar .nav-link {
+    color: var(--text-color);
+    padding: 10px 20px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+/* Cards e botões */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    padding: 15px 20px;
+}
+
+.bg-brown {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #6b340f;  /* Marrom mais escuro */
+    border-color: #6b340f;
+}
+
+.btn-warning {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.btn-warning:hover {
+    background-color: #e6c300;
+    border-color: #e6c300;
+}
+
+/* Alertas e mensagens */
+.alert {
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Tabelas */
+.table {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    font-weight: 600;
+    padding: 12px 15px;
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(245, 222, 179, 0.2);  /* Cor de trigo com baixa opacidade */
+}
+
+/* Formulários */
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* Rodapé */
+footer {
+    background-color: var(--dark-color);
+    color: var(--light-text);
+    padding: 30px 0;
+    margin-top: 50px;
+}
+
+footer h5 {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 48px 0 0;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        transform: translateX(-100%);
+        transition: transform .3s ease-in-out;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    main {
+        padding-top: 20px;
+    }
+}
+
+/* Classes de utilidade */
+.text-brown {
+    color: var(--primary-color);
+}
+
+.bg-wheat {
+    background-color: var(--secondary-color);
+}
+
+/* Animate.css inspirado em animações leves */
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Estilo para ícones */
+.fa {
+    margin-right: 5px;
+}
+
+/* Customização para imagens de produtos */
+.product-img {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Estilo para o carrinho de compras */
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Preço com desconto */
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+}
+
+.discount-price {
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+/* Estilo para paginação */
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-link {
+    color: var(--primary-color);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--secondary-color);
+}

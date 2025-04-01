@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, JsonResponse
 import csv
 import datetime
@@ -13,6 +13,15 @@ from .auth.hasher import hasher
 # user_adm = User(nome="root", email="renanrodrigues7110@gmail.com", senha="admin")
 # user_adm.save()
 
+from django.shortcuts import redirect
+
+def login_required(view_func):
+    def wrapped_view(request, *args, **kwargs):
+        if 'user_id' not in request.session:
+            next_url = request.path
+            return redirect(f'/login/?next={next_url}')
+        return view_func(request, *args, **kwargs)
+    return wrapped_view
 
 # Home
 def home(request):
